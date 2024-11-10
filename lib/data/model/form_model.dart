@@ -13,7 +13,8 @@ class FormModel with _$FormModel {
     String? name,
     String? type,
     int? maxLength,
-    int? minLength,
+    int? minValue,
+    int? maxValue,
   }) = _FormModel;
 
   factory FormModel.fromJson(Map<String, dynamic> json) => _$FormModelFromJson(json);

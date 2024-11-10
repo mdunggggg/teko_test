@@ -1,3 +1,4 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:teko_hiring_test/shared/extension/ext_string.dart';
@@ -83,8 +84,9 @@ class AppInput extends StatelessWidget {
                   ),
                 TextSpan(
                   text: label,
-                  style: labelStyle ?? StyleApp.semibold(color: ColorApp.textColor),
-                )
+                  style: labelStyle ??
+                      StyleApp.semibold(color: ColorApp.textColor),
+                ),
               ],
             ),
           ),
@@ -137,7 +139,17 @@ class AppInput extends StatelessWidget {
                   // }
                   return null;
                 },
-            inputFormatters: inputFormatters,
+            inputFormatters: (inputFormatters ?? [])
+              ..addAll(
+                textInputType == TextInputType.number
+                    ? [
+                        CurrencyTextInputFormatter.currency(
+                          locale: 'vi',
+                          symbol: '',
+                        ),
+                      ]
+                    : [],
+              ),
             decoration: InputDecoration(
               fillColor: backgroundColor,
               filled: backgroundColor != null,

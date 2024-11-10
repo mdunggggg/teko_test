@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:teko_hiring_test/domain/entities/form_entity.dart';
 import '../../domain/entities/component_entity.dart';
 
 extension extString on String? {
@@ -24,5 +25,23 @@ extension extString on String? {
       default:
         throw Exception('Type not found $this');
     }
+  }
+
+  FormType get convertFormType {
+    switch (this) {
+      case 'text':
+        return FormType.text;
+      case 'number':
+        return FormType.number;
+      case 'file_upload':
+        return FormType.file_upload;
+      default:
+        return FormType.text;
+    }
+  }
+
+  int removeAllDot() {
+    if(this == null) return 0;
+    return int.parse(this!.replaceAll('.', ''));
   }
 }

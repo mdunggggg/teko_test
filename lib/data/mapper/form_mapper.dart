@@ -10,10 +10,10 @@ class FormMapper extends BaseDataMapper<FormModel, FormEntity> {
       label: (data?.label).validator,
       isRequired: data?.required ?? false,
       name: (data?.name).validator,
-      type: (data?.type).validator,
+      type: (data?.type).validator.convertFormType,
       maxLength: data?.maxLength ?? 0,
-      minLength: data?.minLength ?? 0,
+      minValue: data?.minValue ?? 0,
+      maxValue: data?.maxValue ?? 0,
     );
   }
-
 }
