@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:teko_hiring_test/data/model/form_model.dart';
+import 'package:teko_hiring_test/data/model/form_model/form_model.dart';
 
 part 'form_submit_model.freezed.dart';
 part 'form_submit_model.g.dart';

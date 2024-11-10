@@ -1,6 +1,6 @@
 import 'package:teko_hiring_test/data/mapper/base_mapper.dart';
 import 'package:teko_hiring_test/data/mapper/label_mapper.dart';
-import 'package:teko_hiring_test/data/model/label_attribute_model.dart';
+import 'package:teko_hiring_test/data/model/label_model/label_attribute_model.dart';
 import 'package:teko_hiring_test/domain/entities/label_attribute_entity.dart';
 
 class LabelAttributeMapper extends BaseDataMapper<LabelAttributeModel, LabelAttributeEntity> {

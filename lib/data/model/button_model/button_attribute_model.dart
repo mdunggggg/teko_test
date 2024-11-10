@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:teko_hiring_test/data/model/button_model.dart';
+
+import 'button_model.dart';
 
 part 'button_attribute_model.freezed.dart';
 part 'button_attribute_model.g.dart';

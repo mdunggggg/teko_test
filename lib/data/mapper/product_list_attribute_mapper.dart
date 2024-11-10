@@ -1,6 +1,6 @@
 import 'package:teko_hiring_test/data/mapper/base_mapper.dart';
 import 'package:teko_hiring_test/data/mapper/product_list_mapper.dart';
-import 'package:teko_hiring_test/data/model/product_list_attribute_model.dart';
+import 'package:teko_hiring_test/data/model/product_model/product_list_attribute_model.dart';
 import 'package:teko_hiring_test/domain/entities/product_list_attribute_entity.dart';
 
 class ProductListAttributeMapper extends BaseDataMapper<ProductListAttributeModel, ProductListAttributeEntity> {

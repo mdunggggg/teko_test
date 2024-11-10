@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:teko_hiring_test/data/model/label_model.dart';
+
+import 'label_model.dart';
 
 part 'label_attribute_model.freezed.dart';
 part 'label_attribute_model.g.dart';

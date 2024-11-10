@@ -1,5 +1,5 @@
 import 'package:teko_hiring_test/data/mapper/base_mapper.dart';
-import 'package:teko_hiring_test/data/model/form_model.dart';
+import 'package:teko_hiring_test/data/model/form_model/form_model.dart';
 import 'package:teko_hiring_test/domain/entities/form_entity.dart';
 import 'package:teko_hiring_test/shared/extension/ext_string.dart';
 

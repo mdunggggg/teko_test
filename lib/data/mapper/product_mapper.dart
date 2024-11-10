@@ -1,7 +1,8 @@
 import 'package:teko_hiring_test/data/mapper/base_mapper.dart';
-import 'package:teko_hiring_test/data/model/product_model.dart';
 import 'package:teko_hiring_test/domain/entities/product_entity.dart';
 import 'package:teko_hiring_test/shared/extension/ext_string.dart';
+
+import '../model/product_model/product_model.dart';
 
 class ProductMapper extends BaseDataMapper<ProductModel, ProductEntity> {
   @override

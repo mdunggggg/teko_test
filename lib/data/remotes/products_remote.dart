@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:teko_hiring_test/data/api/dio.dart';
-import 'package:teko_hiring_test/data/model/base/component_model.dart';
+import 'package:teko_hiring_test/data/model/component_model/component_model.dart';
 
 import '../model/base/base_model.dart';
 
