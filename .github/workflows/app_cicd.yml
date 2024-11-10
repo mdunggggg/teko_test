@@ -29,6 +29,8 @@ jobs:
           java-version: '17'
 
       - run: make run
+      - run: flutter test --plain-name "test insert product"
+      - run: flutter test --plain-name "test insert multi product"
       - run: make build_apk
 
       - uses: actions/upload-artifact@v4
