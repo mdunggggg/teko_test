@@ -10,6 +10,7 @@ import 'package:teko_hiring_test/data/mapper/product_list_mapper.dart';
 import 'package:teko_hiring_test/data/mapper/product_mapper.dart';
 import 'package:teko_hiring_test/data/remotes/products_remote.dart';
 import 'package:teko_hiring_test/domain/repositories/product_repository.dart';
+import 'package:teko_hiring_test/presentation/blocs/image_picker_bloc/image_picker_bloc.dart';
 import 'package:teko_hiring_test/presentation/screen/home/bloc/home_bloc.dart';
 
 import '../../data/api/dio.dart';
@@ -47,7 +48,7 @@ class DiConfig {
     injector.registerFactory(
       () => HomeBloc(injector.get()),
     );
-
+    injector.registerFactory(() => ImagePickerBloc());
 
     // ================== MAPPER ==================
     injector.registerLazySingleton<ProductMapper>(

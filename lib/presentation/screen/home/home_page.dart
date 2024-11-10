@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
-import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -13,12 +14,12 @@ import 'package:teko_hiring_test/presentation/components/loading.dart';
 import 'package:teko_hiring_test/presentation/di/di.dart';
 import 'package:teko_hiring_test/presentation/screen/home/bloc/home_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teko_hiring_test/shared/extension/ext_context.dart';
 import 'package:teko_hiring_test/shared/extension/ext_num.dart';
 import 'package:teko_hiring_test/shared/extension/ext_string.dart';
 import 'package:teko_hiring_test/shared/extension/ext_widget.dart';
 import 'package:teko_hiring_test/shared/style_text/style_text.dart';
 
+import '../../blocs/image_picker_bloc/image_picker_bloc.dart';
 import '../../components/image_picker_page.dart';
 import '../../components/label_button.dart';
 
@@ -33,6 +34,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final bloc = DiConfig().injector.get<HomeBloc>();
   final key = GlobalKey<FormState>();
+  final imageBloc = DiConfig().injector.get<ImagePickerBloc>();
+
+  final name = TextEditingController();
+  final price = TextEditingController();
 
   @override
   void initState() {
@@ -44,6 +49,9 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     super.dispose();
     bloc.close();
+    imageBloc.close();
+    name.dispose();
+    price.dispose();
   }
 
   @override
@@ -81,6 +89,7 @@ class _HomePageState extends State<HomePage> {
                       key: key,
                       child: _buildForms(state),
                     ),
+                    _buildImagePicker(),
                     16.height,
                     _buildButton(state),
                     16.height,
@@ -109,24 +118,27 @@ class _HomePageState extends State<HomePage> {
             hintText: '',
             label: form.label,
             required: form.isRequired,
+            controller: form.type == FormType.text ? name : price,
             inputFormatters: form.type == FormType.text
                 ? [LengthLimitingTextInputFormatter(form.maxLength)]
                 : [],
             textInputType: form.type == FormType.number
                 ? TextInputType.number
                 : TextInputType.text,
-            validate: form.type != FormType.number ? null : (value) {
-              if (value?.isEmpty ?? true) {
-                return 'Vui lòng điền ${form.label.toLowerCase()}';
-              }
-              if(value.removeAllDot() < form.minValue) {
-                return 'Giá sản phẩm phải lớn hơn ${form.minValue.formatCurrency} đ';
-              }
-              if(value.removeAllDot() > form.maxValue) {
-                return 'Giá sản phẩm phải nhỏ hơn ${form.maxValue.formatCurrency} đ';
-              }
-              return null;
-            },
+            validate: form.type != FormType.number
+                ? null
+                : (value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Vui lòng điền ${form.label.toLowerCase()}';
+                    }
+                    if (value.removeAllDot() < form.minValue) {
+                      return 'Giá sản phẩm phải lớn hơn ${form.minValue.formatCurrency} đ';
+                    }
+                    if (value.removeAllDot() > form.maxValue) {
+                      return 'Giá sản phẩm phải nhỏ hơn ${form.maxValue.formatCurrency} đ';
+                    }
+                    return null;
+                  },
           );
         } else {
           return ColumnLabelButton(
@@ -141,7 +153,10 @@ class _HomePageState extends State<HomePage> {
                 aspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
                 source: ImageSource.gallery,
               );
-              print('image: ${image?.path}');
+              if (image == null) {
+                return;
+              }
+              imageBloc.add(ImagePickerLoad(image));
             },
           );
         }
@@ -152,8 +167,22 @@ class _HomePageState extends State<HomePage> {
 
   TextButton _buildButton(HomeLoaded state) {
     return TextButton(
-      onPressed: () => {
-        if (!key.currentState!.validate()) {},
+      onPressed: () {
+        if (!key.currentState!.validate()) {
+          return;
+        }
+        XFile? image;
+        if (imageBloc.state is ImagePickerLoaded) {
+          image = (imageBloc.state as ImagePickerLoaded).image;
+        }
+        bloc.add(
+          HomeAddProduct(
+            name.text,
+            price.text.removeAllDot().toInt(),
+            image?.path,
+          ),
+        );
+        imageBloc.add(ImagePickerClear());
       },
       style: TextButton.styleFrom(
         backgroundColor: Colors.blue,
@@ -178,6 +207,7 @@ class _HomePageState extends State<HomePage> {
         final product = state.productList[index];
         return _buildItem(product);
       },
+      showFull: true,
       crossAxisCount: 2,
       shrinkWrap: true,
       padding: 0.padding,
@@ -187,10 +217,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Column _buildItem(ProductEntity product) {
+    print('product: ${product.name}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BaseCacheImage(url: product.imageSrc).size(height: 200),
+        if (product.imageSrc.startsWith('http'))
+          BaseCacheImage(url: product.imageSrc).size(height: 200),
+        if (!product.imageSrc.startsWith('http'))
+          Image.file(File(product.imageSrc)).size(height: 200),
         4.height,
         Text(
           product.name,
@@ -208,6 +242,25 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ],
+    );
+  }
+
+  BlocBuilder<ImagePickerBloc, ImagePickerState> _buildImagePicker() {
+    return BlocBuilder<ImagePickerBloc, ImagePickerState>(
+      bloc: imageBloc,
+      builder: (context, state) {
+        if (state is ImagePickerLoading) {
+          return const Center(
+            child: BaseLoading(),
+          );
+        }
+        if (state is ImagePickerLoaded) {
+          return Image.file(File(state.image.path))
+              .size(height: 200)
+              .padding(16.paddingTop);
+        }
+        return Container();
+      },
     );
   }
 }
