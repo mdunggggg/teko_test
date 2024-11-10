@@ -54,6 +54,8 @@ dependencies:
   currency_text_input_formatter: ^2.2.6
   image_picker: ^1.1.2
   image_cropper: ^8.0.2
+  toastification: ^2.3.0
+  highlight_text: ^1.8.0
 
 dev_dependencies:
   flutter_test:
@@ -88,8 +90,7 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - assets/images/
-    - assets/icons/
+    - assets/svg/
 #  fonts:
 #    - family: SanFra
 #      fonts:

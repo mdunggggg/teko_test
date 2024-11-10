@@ -22,6 +22,7 @@ import 'package:teko_hiring_test/shared/style_text/style_text.dart';
 import '../../blocs/image_picker_bloc/image_picker_bloc.dart';
 import '../../components/image_picker_page.dart';
 import '../../components/label_button.dart';
+import '../../components/toast_custom.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
@@ -183,6 +184,14 @@ class _HomePageState extends State<HomePage> {
           ),
         );
         imageBloc.add(ImagePickerClear());
+        ToastCustom.show(
+          context,
+          title: 'Thành công',
+          msg: 'Tạo sản phẩm thành công',
+          svgIcon: 'assets/svg/success.svg',
+          color: Colors.green,
+          timeClose: 3.seconds,
+        );
       },
       style: TextButton.styleFrom(
         backgroundColor: Colors.blue,
