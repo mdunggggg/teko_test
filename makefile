@@ -20,3 +20,6 @@ reload_package:
 run:
 	dart run build_runner build --delete-conflicting-outputs
 
+build_apk:
+	flutter build apk --dart-define=DART_DEFINES_BASE_URL_HTTP="https://hiring-test.stag.tekoapis.net"
+
