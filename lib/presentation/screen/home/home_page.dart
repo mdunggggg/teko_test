@@ -23,6 +23,8 @@ import '../../blocs/image_picker_bloc/image_picker_bloc.dart';
 import '../../components/image_picker_page.dart';
 import '../../components/label_button.dart';
 import '../../components/toast_custom.dart';
+import '../../router/router.gr.dart';
+import 'components/product_item.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
@@ -59,6 +61,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.pushRoute(const ProductListRoute());
+        },
+        child: const Icon(Icons.file_copy_outlined),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: BlocBuilder<HomeBloc, HomeState>(
@@ -214,7 +222,7 @@ class _HomePageState extends State<HomePage> {
       itemCount: state.productList.length,
       itemBuilder: (context, index) {
         final product = state.productList[index];
-        return _buildItem(product);
+        return ProductItem(product: product);
       },
       showFull: true,
       crossAxisCount: 2,
@@ -225,34 +233,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Column _buildItem(ProductEntity product) {
-    print('product: ${product.name}');
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (product.imageSrc.startsWith('http'))
-          BaseCacheImage(url: product.imageSrc).size(height: 200),
-        if (!product.imageSrc.startsWith('http'))
-          Image.file(File(product.imageSrc)).size(height: 200),
-        4.height,
-        Text(
-          product.name,
-          style: StyleApp.bold(
-            fontSize: 14,
-            color: Colors.black,
-          ),
-        ),
-        4.height,
-        Text(
-          '${product.price.formatCurrency} đ',
-          style: StyleApp.normal(
-            fontSize: 12,
-            color: Colors.black,
-          ),
-        ),
-      ],
-    );
-  }
 
   BlocBuilder<ImagePickerBloc, ImagePickerState> _buildImagePicker() {
     return BlocBuilder<ImagePickerBloc, ImagePickerState>(
