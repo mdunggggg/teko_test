@@ -1,16 +1,15 @@
-# teko_hiring_test
+# Teko Hiring Test
 
-A new Flutter project.
+## Overview
+- **Clean Architecture**: Ensures separation of concerns, maintainability, and scalability with a well-structured codebase.
+- **State Management (Bloc)**: Manages app state efficiently by separating business logic from the UI.
+- **Dependency Injection** (GetIt): Simplifies dependency management, making components modular and easy to test.
+- **Navigation (AutoRoute)**: Provides type-safe, declarative navigation with minimal boilerplate.
+- **Network (Dio)**: Facilitates robust HTTP requests with features like interceptors and error handling.
+- **Local Database (Floor)**: Simplifies local data storage with an abstraction layer over SQLite.
 
-## Getting Started
+## Extra Feature
+- **CI/CD**: Implements a streamlined CI/CD pipeline with GitHub Actions, automating APK builds to ensure faster, more reliable deployment and continuous integration. This setup reduces manual intervention, improving development efficiency and consistency across builds.
+- **Unit Testing**: Focuses on testing the local database to ensure data integrity and reliable data operations, supporting robust, error-free database functionality.
+- **Product List Screen**: Accessed via a floating button on the main screen, this screen uses load-more functionality to enhance performance and user experience by loading data incrementally as the user scrolls.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
