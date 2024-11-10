@@ -8,4 +8,12 @@ class ProductEntity {
     required this.price,
     required this.imageSrc,
   });
+
+  Map<String, Object> toJson() {
+    return {
+      'name': name,
+      'price': price,
+      'imageSrc': imageSrc,
+    };
+  }
 }

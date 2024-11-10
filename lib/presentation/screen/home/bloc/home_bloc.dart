@@ -39,6 +39,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         button = (item.customAttributes as ButtonAttributeEntity).button;
       } else if(item.customAttributes is ProductListAttributeEntity) {
         productList = (item.customAttributes as ProductListAttributeEntity).productList.products;
+        print('productList' + productList.length.toString());
       }
     }
 

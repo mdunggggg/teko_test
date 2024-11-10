@@ -9,6 +9,7 @@ class ProductListAttributeModel with _$ProductListAttributeModel {
   const ProductListAttributeModel._();
 
   const factory ProductListAttributeModel({
+    @JsonKey(name: 'productlist')
     ProductListModel? productList,
   }) = _ProductListAttributeModel;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:teko_hiring_test/shared/extension/ext_string.dart';
 
 import '../../shared/colors/colors.dart';
 import '../../shared/style_text/style_text.dart';
@@ -33,6 +34,7 @@ class AppInput extends StatelessWidget {
   final List<BoxShadow>? boxShadow;
   final Key? key;
   final bool? isDense;
+
   const AppInput({
     this.initialValue,
     this.label,
@@ -73,10 +75,16 @@ class AppInput extends StatelessWidget {
         if (label != null)
           RichText(
             text: TextSpan(
-              text: label,
-              style: labelStyle ?? StyleApp.semibold(color: ColorApp.textColor),
               children: [
-                if (required) TextSpan(text: ' *', style: StyleApp.semibold(color: Colors.red))
+                if (required)
+                  TextSpan(
+                    text: '* ',
+                    style: StyleApp.semibold(color: Colors.red),
+                  ),
+                TextSpan(
+                  text: label,
+                  style: labelStyle ?? StyleApp.semibold(color: ColorApp.textColor),
+                )
               ],
             ),
           ),
@@ -111,7 +119,7 @@ class AppInput extends StatelessWidget {
               }
             },
             onTapOutside: (event) =>
-            onTapOutside?.call() ??
+                onTapOutside?.call() ??
                 FocusManager.instance.primaryFocus?.unfocus(),
             maxLines: password ? 1 : maxLines,
             keyboardType: textInputType,
@@ -119,7 +127,16 @@ class AppInput extends StatelessWidget {
             obscureText: password,
             focusNode: fn,
             textAlign: textAlign,
-            validator: validate,
+            validator: validate ??
+                (value) {
+                  if (required && value.isEmptyOrNull) {
+                    return 'Vui lòng nhập ${label?.toLowerCase()}';
+                  }
+                  // if (value!.isNotEmpty) {
+                  //   return value.validatorTextField(type: textInputType);
+                  // }
+                  return null;
+                },
             inputFormatters: inputFormatters,
             decoration: InputDecoration(
               fillColor: backgroundColor,

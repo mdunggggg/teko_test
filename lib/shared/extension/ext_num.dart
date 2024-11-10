@@ -2,21 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 extension extNum on num {
-  String formatDate({
-    String? valDefault,
-    String? format,
-  }) {
-    try {
-      final double time = double.tryParse(toString()) ?? 0;
-      if (time <= 0) {
-        return valDefault ?? '';
-      }
-      return DateFormat(format ?? 'dd/MM/yyyy')
-          .format(DateTime.fromMillisecondsSinceEpoch(time.round() * 1000));
-    } catch (e) {
-      return valDefault ?? '';
-    }
-  }
 
   BorderRadius get radius => BorderRadius.circular(toDouble());
   BorderRadius get radiusTop =>
@@ -53,9 +38,12 @@ extension extNum on num {
     }
     return '${seconds.inSeconds} s';
   }
+  String get formatCurrency {
+    final oCcy = NumberFormat('#,##0', 'vi_VN');
+    return oCcy.format(this);
+  }
 }
 
 extension extNumOrNull on num? {
   num get validator => this ?? 0;
-
 }
