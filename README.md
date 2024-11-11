@@ -14,6 +14,7 @@
 - **Product List Screen**: Accessed via a floating button on the main screen, this screen uses load-more functionality to enhance performance and user experience by loading data incrementally as the user scrolls.
 
 ## How to use
+- Make sure you’ve got Dart and Flutter installed
 - Open the project in your preferred IDE (Android Studio, VS Code, etc.).
 - Run the command ```flutter pub get```.
 - Run ```make run``` or ```dart run build_runner build --delete-conflicting-outputs```
